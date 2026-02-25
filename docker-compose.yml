@@ -1,0 +1,16 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: plantasia_db
+    restart: always
+    environment:
+      POSTGRES_USER: plantasia_user
+      POSTGRES_PASSWORD: plantasia_pass
+      POSTGRES_DB: plantasia
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./DB/data:/var/lib/postgresql/data
+      - ./DB/Plantasia.sql:/docker-entrypoint-initdb.d/Plantasia.sql

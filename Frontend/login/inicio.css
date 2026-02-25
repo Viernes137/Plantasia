@@ -1,0 +1,53 @@
+body {
+    /*background-color: rgb(165, 193, 165);*/
+    background-image: url("../media/borrego.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+}
+
+.centrado {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fondo {
+    width: 100vw;
+    height: 100vh;
+}
+
+.cont-forms {
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(51, 51, 51, 0.553);
+    padding: 20px;
+    backdrop-filter: blur(10px);
+}
+
+.cont-forms.a {
+    background-color: #28401f76;
+    width: 400px;
+}
+
+.cont-forms.b {
+    display: none;
+    width: 700px;
+    background-color: #ffc47643;
+}
+
+@media (max-width: 576px) {
+
+    .fondo {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .cont-forms.b {
+        width: auto;
+    }
+
+    .cont-forms.a {
+        width: 300px;
+    }
+}
