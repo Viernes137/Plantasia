@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>México Pixel Map</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a1a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            color: #fff;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 16px;
+            color: #00ff41;
+            /* Verde Matrix/Retro */
+            margin-bottom: 24px;
+            text-align: center;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px #000;
+        }
+
+        #map-container {
+            position: relative;
+            background: #0d1f33;
+            /* Océano */
+            border: 4px solid #1a7a30;
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+            line-height: 0;
+            image-rendering: pixelated;
+        }
+
+        /* Efecto de líneas de TV vieja (Scanlines) */
+        #map-container::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(to bottom,
+                    transparent 0px,
+                    transparent 2px,
+                    rgba(0, 0, 0, 0.15) 3px);
+            pointer-events: none;
+        }
+
+        svg {
+            display: block;
+            shape-rendering: crispEdges;
+        }
+
+        .mexico-shape {
+            fill: #1a7a30;
+            /* Verde bandera retro */
+            stroke: #000;
+            stroke-width: 1;
+            transition: fill 0.1s, filter 0.1s;
+            cursor: crosshair;
+        }
+
+        .mexico-shape:hover {
+            fill: #2ecc71;
+            filter: drop-shadow(0 0 10px #00ff41);
+        }
+
+        #status-bar {
+            margin-top: 20px;
+            padding: 10px 20px;
+            border: 2px dashed #00ff41;
+            font-size: 10px;
+            color: #00ff41;
+            text-transform: uppercase;
+        }
+
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>▶ ESTADOS UNIDOS MEXICANOS ◀</h1>
+
+    <div id="map-container">
+        <svg viewBox="0 0 60 40" width="1000" height="700" xmlns="http://www.w3.org/2000/svg">
+
+            <polygon class="mexico-shape" points="
+                7,2 13,2 13,3 15,3 15,4 21,4 21,3 24,3 24,4 25,4 25,5 27,5 27,8 29,8 29,7 33,7 33,9 34,9 34,10 34,10 35,10 35,10 35,12 36,12 36,13 39,13 39,15 38,15, 38,21 
+                39,21 39,23 40,23 40,25 41,25 41,26 43,26 43,27 45,27 45,26 49,26 49,25 50,25 50,24 51,24 51,22 52,22 52,21 57,21 57,23 56,23 56,27 53,27 53,28 51,28 51,31 
+                48,31 48,33 46,33 46,31 44,31 44,30 42,30 42,31 37,31 37,30 34,30 34,29 32,29 32,28 29,28 29,27 28,27 28,26 25,26 25,25 24,25 24,22 25,22 25,19 24,19 19,14 
+                19,12 18,12 14,8 14,6 13,6 13,4 11,4 11,7 12,7 12,8 13,8 13,9 14,9 14,11 15,11 15,12 16,12 16,15 17,15 17,16 18,16 18,17 19,17 19,18 18,18 18,19 17,19 17,17
+                15,17 15,16 14,16 14,13 13,13 13,12 11,12 11,11 9,11 9,10 11,10 11,9 9,9 9,6 8,6 8,3 7,3 7,2
+                " />
+        </svg>
+    </div>
+
+    <div id="status-bar">
+        SISTEMA: EN LÍNEA <span class="blink">_</span>
+    </div>
+
+    <script>
+        const shape = document.querySelectorAll('.mexico-shape');
+        const statusBar = document.getElementById('status-bar');
+
+        shape.forEach(p => {
+            p.addEventListener('mouseenter', () => {
+                statusBar.innerHTML = "REGIÓN DETECTADA: MÉXICO <span class='blink'>_</span>";
+                statusBar.style.color = "#fff";
+            });
+            p.addEventListener('mouseleave', () => {
+                statusBar.innerHTML = "SISTEMA: EN LÍNEA <span class='blink'>_</span>";
+                statusBar.style.color = "#00ff41";
+            });
+        });
+    </script>
+</body>
+
+</html>

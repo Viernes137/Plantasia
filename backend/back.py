@@ -91,6 +91,28 @@ def get_plantas():
     
     return jsonify(resultado)
 
+
+@app.route('/Usuarios/validar', methods=['POST'])
+def validar_usrs():
+    data = request.get_json()
+    correo_ingresado = data.get('email')
+    pass_ingresada = data.get('pass') 
+
+    user = Usuarios.query.filter_by(correo=correo_ingresado).first()
+
+    if user and user.contrasena == pass_ingresada:
+
+        access_token = create_access_token(identity=str(user.id_usr))
+        return jsonify({
+            "mensaje": "Login exitoso",
+            "token": access_token,
+            "usuario": user.usuario
+        }), 200
+    
+    return jsonify({"error": "Credenciales inválidas"}), 401
+
+
+
 @app.route('/Usuarios/crear', methods=['POST'])
 def post_usrs():
     data = request.get_json()
@@ -123,24 +145,37 @@ def post_usrs():
         return jsonify({"error": str(e)}), 500
 
 
-@app.route('/Usuarios/validar', methods=['POST'])
-def validar_usrs():
-    data = request.get_json()
-    correo_ingresado = data.get('email')
-    pass_ingresada = data.get('pass') 
-
-    user = Usuarios.query.filter_by(correo=correo_ingresado).first()
-
-    if user and user.contrasena == pass_ingresada:
-
-        access_token = create_access_token(identity=str(user.id_usr))
-        return jsonify({
-            "mensaje": "Login exitoso",
-            "token": access_token,
-            "usuario": user.usuario
-        }), 200
+@app.route('/Usuarios/perfil', methods=['GET'])
+@jwt_required() 
+def perfil():
+    user_id = get_jwt_identity() 
     
-    return jsonify({"error": "Credenciales inválidas"}), 401
+    user = Usuarios.query.get(user_id)
+    return jsonify({
+        "nombre": user.nombre,
+        "correo": user.correo,
+        "usuario": user.usuario,
+        "id":user.id_usr
+    }), 200
+
+@app.route('/Usuarios/mis-macetas', methods=['GET'])
+@jwt_required()
+def get_macetas_usuario():
+
+    id_usr_act = get_jwt_identity()
+
+    mis_macetas = Macetas.query.filter_by(id_usr=id_usr_act).all()
+    
+    resultado = []
+    for m in mis_macetas:
+        resultado.append({
+            "id": m.id_maceta,
+            "nombre": m.nombre_maceta,
+            "planta": m.tipo_planta,
+            "humedad": m.humedad_actual 
+        })
+    
+    return jsonify(resultado), 200
 
 
 if __name__ == "__main__":

@@ -26,6 +26,7 @@ async function hasheo(pass) {
 const signin = document.getElementById("signin");
 const login = document.getElementById("login");
 
+//validar a los usuarios
 login.addEventListener("submit", async function (event) {
     event.preventDefault();
     const datos = new FormData(login);
@@ -45,14 +46,15 @@ login.addEventListener("submit", async function (event) {
     const result = await response.json();
 
     if (response.ok) {
-        console.log("Login exitoso:", result);
-        localStorage.setItem('token_plantas', result.token);
-        window.location.href = "../main/index.html"; // O tu ruta
+        console.log("Login exitoso:", result.usuario);
+        localStorage.setItem('token_usr', result.token);
+        window.location.href = "../main/index.html";
     } else {
         alert("Error: " + result.error);
     }
 });
 
+//crear a los usuarios
 signin.addEventListener("submit", async function (event) {
     event.preventDefault();
     const datos = new FormData(signin);

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Mexico Matrix - 100x100 Grid</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #050505;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: 'Press Start 2P', cursive;
+            color: #00ff41;
+            overflow: hidden;
+        }
+
+        .header {
+            font-size: 12px;
+            margin-bottom: 20px;
+            text-shadow: 0 0 10px #00ff41;
+            letter-spacing: 2px;
+        }
+
+        #viewport {
+            position: relative;
+            padding: 20px;
+            border: 2px solid #003300;
+            background: #000;
+        }
+
+        /* El Grid 100x100 */
+        .grid-overlay {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 500px;
+            height: 500px;
+            background-size: 5px 5px;
+            /* 500px / 100 unidades = 5px por celda */
+            background-image:
+                linear-gradient(to right, #001500 1px, transparent 1px),
+                linear-gradient(to bottom, #001500 1px, transparent 1px);
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        svg {
+            display: block;
+            background: #000;
+            image-rendering: pixelated;
+            shape-rendering: crispEdges;
+            z-index: 1;
+        }
+
+        .mexico-block {
+            fill: #00ff41;
+            fill-opacity: 0.8;
+            stroke: #000;
+            stroke-width: 0.2;
+            transition: fill-opacity 0.1s;
+        }
+
+        .mexico-block:hover {
+            fill-opacity: 1;
+            filter: drop-shadow(0 0 5px #00ff41);
+        }
+
+        #coords-display {
+            margin-top: 15px;
+            font-size: 10px;
+            color: #00ff41;
+            min-width: 250px;
+            border: 1px solid #00ff41;
+            padding: 10px;
+            background: rgba(0, 40, 0, 0.2);
+        }
+
+        .blink {
+            animation: blinker 1s step-end infinite;
+        }
+
+        @keyframes blinker {
+            50% {
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="header">SCANNING GEOLOCATION... [MEX]</div>
+
+    <div id="viewport">
+        <div class="grid-overlay"></div>
+        <svg id="mexico-svg" viewBox="0 0 100 100" width="500" height="500">
+            <rect class="mexico-block" x="25" y="15" width="40" height="10" />
+            <rect class="mexico-block" x="35" y="25" width="30" height="15" />
+            <rect class="mexico-block" x="45" y="40" width="20" height="20" />
+            <rect class="mexico-block" x="60" y="55" width="15" height="15" />
+            <rect class="mexico-block" x="75" y="45" width="15" height="15" />
+
+            <rect class="mexico-block" x="10" y="10" width="5" height="25" />
+        </svg>
+    </div>
+
+    <div id="coords-display">
+        TARGET_COORD: <span id="x-coord">00</span>, <span id="y-coord">00</span>
+        <span class="blink">_</span>
+    </div>
+
+    <script>
+        const svg = document.getElementById('mexico-svg');
+        const xDisplay = document.getElementById('x-coord');
+        const yDisplay = document.getElementById('y-coord');
+
+        svg.addEventListener('mousemove', (e) => {
+            const rect = svg.getBoundingClientRect();
+
+            // Calculamos la posición relativa dentro del SVG (0-100)
+            const x = Math.floor(((e.clientX - rect.left) / rect.width) * 100);
+            const y = Math.floor(((e.clientY - rect.top) / rect.height) * 100);
+
+            // Formato de dos dígitos
+            xDisplay.innerText = x.toString().padStart(2, '0');
+            yDisplay.innerText = y.toString().padStart(2, '0');
+        });
+
+        svg.addEventListener('mouseleave', () => {
+            xDisplay.innerText = "--";
+            yDisplay.innerText = "--";
+        });
+    </script>
+</body>
+
+</html>
