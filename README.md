@@ -1,8 +1,8 @@
-# 🌱 Plantasia
+# Plantasia
 
 Plantasia es una plataforma IoT orientada al cuidado de plantas. Permite conectar macetas inteligentes (hardware) con una aplicación web, para monitorear en tiempo real variables como la temperatura, luz y humedad, y gestionar tus plantas de manera interactiva.
 
-## 🚀 Tecnologías Principales
+## Tecnologías Principales
 
 - **Frontend:** React + Vite, Bootstrap.
 - **Backend:** Python + Flask, Flask-SQLAlchemy, Flask-JWT-Extended.
@@ -10,18 +10,18 @@ Plantasia es una plataforma IoT orientada al cuidado de plantas. Permite conecta
 - **Hardware (Macetas):** ESP32 / Arduino (C++).
 - **Despliegue:** Docker y Docker Compose.
 
----
 
-## 📁 Estructura del Proyecto
+
+## Estructura del Proyecto
 
 - `/Frontend-react/PlantasiaF`: Contiene la aplicación web (React/Vite).
 - `/backend`: Contiene la API REST desarrollada en Flask.
 - `/DB`: Archivos relacionados con la base de datos, incluyendo el script de inicialización (`Plantasia.sql`).
 - `/Macetas`: Código fuente (C++) para los microcontroladores de las macetas inteligentes.
 
----
 
-## 🛠️ Instalación y Uso (con Docker)
+
+## Instalación y Uso (con Docker)
 
 La forma más rápida de ejecutar todo el ecosistema (Frontend, Backend y Base de Datos) es utilizando Docker Compose.
 
@@ -56,9 +56,9 @@ Esto iniciará tres contenedores:
   docker exec -it plantasia_db psql -U plantasia_user -d plantasia
   ```
 
----
 
-## 💻 Desarrollo Local (Sin Docker)
+
+## Desarrollo Local (Sin Docker)
 
 Si prefieres levantar los servicios individualmente para desarrollo:
 
@@ -86,7 +86,7 @@ npm install
 npm run dev
 ```
 
----
 
-## 🔧 Scripts y Tareas Adicionales
+
+### Extras
 - Para insertar datos por defecto simplemete replica lo que esta dentro del backend (`insert_default_plant.py`).
