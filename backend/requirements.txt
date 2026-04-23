@@ -1,7 +1,0 @@
-flask 
-flask-sqlalchemy 
-SQLAlchemy
-flask-cors 
-python-dotenv 
-psycopg2-binary
-lask-JWT-Extended 

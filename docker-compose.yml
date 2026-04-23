@@ -14,3 +14,35 @@ services:
     volumes:
       - ./DB/data:/var/lib/postgresql/data
       - ./DB/Plantasia.sql:/docker-entrypoint-initdb.d/Plantasia.sql
+
+  backend:
+    build:
+      context: ./backend
+    container_name: plantasia_backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      - DB_USER=plantasia_user
+      - DB_PASSWORD=plantasia_pass
+      - DB_HOST=db
+      - DB_NAME=plantasia
+      - FLASK_APP=app.py
+      - FLASK_DEBUG=1
+    depends_on:
+      - db
+    volumes:
+      - ./backend:/app
+
+  frontend:
+    build:
+      context: ./Frontend-react/PlantasiaF
+    container_name: plantasia_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    depends_on:
+      - backend
+    volumes:
+      - ./Frontend-react/PlantasiaF:/app
+      - /app/node_modules

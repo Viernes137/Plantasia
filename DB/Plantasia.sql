@@ -25,6 +25,8 @@ CREATE TABLE macetas (
     id_maceta SERIAL PRIMARY KEY,
     id_planta INT NOT NULL, 
     id_usr INT NOT NULL,    
+    nombre VARCHAR(100) NOT NULL DEFAULT 'Mi Maceta',
+    ip_maceta VARCHAR(50),
     promedio_satisfaccion_luz INT,
     promedio_satisfaccion_agua INT,
     promedio_satisfaccion_temp INT,
